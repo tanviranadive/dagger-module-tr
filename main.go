@@ -17,8 +17,6 @@ package main
 import (
 	"context"
 	"dagger/dagger-module-tr/internal/dagger"
-	"fmt"
-	"log"
 )
 
 type DaggerModuleTr struct{}
@@ -38,14 +36,10 @@ func (m *DaggerModuleTr) ContainerEcho(stringArg string) *dagger.Container {
 //		Stdout(ctx)
 //}
 
-func (m *DaggerModuleTr) Setup(ctx context.Context, dir *dagger.Directory, filter string, test string) {
+func (m *DaggerModuleTr) Setup(ctx context.Context, test string) {
 	// Initialize Dagger client
-	client := dagger.Connect()
+	_ = dagger.Connect()
 	ctx = context.Background()
 
-	fmt.Println(test)
-	_, err := ContainerEcho(client, filter, dir)
-	if err != nil {
-		log.Fatalf("Error in container echo: %v", err)
-	}
+	_ = m.ContainerEcho(test)
 }
